@@ -1,51 +1,25 @@
-## AWS Logging & Monitoring Lab
+## AWS Logging & Observability Pipeline
 
-Implemented proactive threat detection and compliance monitoring across AWS services using CloudTrail, GuardDuty, AWS Config, CloudWatch and Athena for log analysis.
-
----
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Real-World Risk](#real-world-risk)
-- [What I Built](#what-i-built)
-- [Diagram](#diagram)
-- [Objectives](#objectives)
-- [Steps Performed](#steps-performed)
-  - [1. CloudTrail Setup]
-  - [2. GuardDuty Enablement]
-  - [3. AWS Config Setup]
-  - [4. CloudWatch Metric Filter & Alarm]
-  - [5. Athena Query Setup]
-  - [6. Cleanup]
-- [Screenshots](#screenshots)
-- [JSONs Table](#jsons-table)
-- [Lessons Learned](#lessons-learned)
-- [References](#references)
-- [Contact](#contact)
+Designed and validated a centralized AWS logging and observability pipeline using CloudTrail, CloudWatch, AWS Config, GuardDuty and Athena. This project demonstrates how to collect, query and act on operational signals across an AWS environment using native services.
 
 ---
 
 ## Overview
 
-This lab focused on implementing centralized security logging, threat detection, and configuration compliance monitoring in AWS. Using CloudTrail for API auditing, GuardDuty for threat detection, AWS Config for resource compliance, CloudWatch for alerting, and Athena for querying logs, the lab demonstrates an end-to-end logging and monitoring pipeline essential for security operations.
+This project focuses on building centralized logging, monitoring and configuration visibility across AWS services. It covers API activity logging, configuration state tracking, metric-based alerting and log analysis using AWS-native tools.
 
----
-
-## Real-World Risk
-
-In modern cloud environments, the sheer volume of API activity and complex configurations can obscure malicious behavior or compliance drift, increasing the risk of unnoticed breaches and misconfigurations. Without centralized logging, threat detection and continuous compliance monitoring, attackers can exploit gaps in visibility to move laterally, exfiltrate data or persist undetected. This lab addresses these risks by implementing a comprehensive logging and monitoring solution that enables proactive detection of suspicious activities and ensures that cloud resources remain securely configured.
+The goal is to demonstrate how cloud environments can be made observable and auditable, enabling engineers to understand system behavior, detect anomalies and support troubleshooting and governance at scale.
 
 ---
 
 ## What I Built
 
-- Multi-region AWS CloudTrail trail to capture all API calls and user activity.
-- Enabled GuardDuty for continuous threat detection using machine learning and threat intelligence.
-- Configured AWS Config with multiple managed rules to monitor resource compliance against security best practices.
-- Created CloudWatch metric filters and alarms to detect and alert on critical events such as unauthorized console logins.
-- Set up Athena to query CloudTrail logs stored in S3 for detailed forensic analysis and incident investigation.
-- Secured log storage and alerting mechanisms to ensure integrity and timeliness of security data.
+- Multi-region CloudTrail setup capturing all AWS API activity.
+- Centralized log storage in Amazon S3.
+- AWS Config recording resource configuration changes and compliance state.
+- CloudWatch metric filters and alarms for key operational events.
+- Athena-based querying of CloudTrail logs for analysis and investigation.
+- End-to-end resource lifecycle cleanup after validation.
 
 ---
 
@@ -55,71 +29,27 @@ In modern cloud environments, the sheer volume of API activity and complex confi
 
 ---
 
-## Objectives
+## Implementation Highlights
 
-- Enable CloudTrail to log all API activity across regions into S3.
-- Enable GuardDuty threat detection.
-- Set up AWS Config with managed rules for security compliance.
-- Configure CloudWatch metric filters and alarms for security events.
-- Use Athena to query CloudTrail logs for audit and investigation.
-
----
-
-## Steps Performed
-
-**1. CloudTrail Setup**
-   - Created a multi-region CloudTrail trail named main-trail to capture all API activity.
-   - Configured the trail to deliver logs to a dedicated S3 bucket (my-cloudtrail-logs-sebastiansilva)
-   - Verified CloudTrail logging via console and confirmed logs in the S3 bucket *(Screenshot: `cloudtrail_trail_summary.png`)*
-
-**2. GuardDuty Enablement**
-   - Enabled GuardDuty for threat detection in the main AWS region.
-   - Verified GuardDuty status in the console *(Screenshot: `guardduty_enabled_dashboard.png`)*
-
-**3. AWS Config Setup**
-   - Enabled AWS Config to record all supported resource types.
-   - Applied multiple AWS managed rules to enforce security compliance, including password policies and public access restrictions.
-   - Verified compliance dashboard status *(Screenshot: `awsconfig_rules_compliance_status.png`)*
-
-**4. CloudWatch Metric Filter & Alarm**
-   - Created a CloudWatch metric filter to detect ConsoleLogin events from CloudTrail logs.
-   - Configured a CloudWatch alarm triggered on login activity for real-time alerting.
-   - Captured metric filter and alarm summaries *(Screenshots: `cloudwatch_metric_filter_consolelogin.png` & `cloudwatch_alarm_consolelogin_summary.png`)*
-
-**5. Athena Query Setup**
-   - Configured Athena query output bucket in S3.
-   - Created Athena table from CloudTrail logs stored in S3.
-   - Executed SQL queries to analyze recent login events and API activities.
-   - Captured Athena query results *(Screenshot: `sample-cloudtrail-log-json.png`)*
-
-**6. Cleanup**
-   - Deleted CloudTrail trails and emptied S3 buckets storing CloudTrail logs.
-   - Disabled GuardDuty and removed associated data.
-   - Deleted AWS Config rules, stopped and removed configuration recorder and delivery channels.
-   - Removed CloudWatch log groups, metric filters and alarms created during the lab.
-   - Dropped Athena tables and emptied/deleted the S3 bucket used for Athena query results.
-   - Cleaned up IAM roles, policies, and any other temporary resources created for lab purposes.
+- Enabled multi-region CloudTrail to capture all management events.
+- Delivered CloudTrail logs to a dedicated S3 bucket.
+- Enabled AWS Config to record supported resource types.
+- Applied managed AWS Config rules to observe configuration drift.
+- Created CloudWatch metric filters and alarms based on CloudTrail events.
+- Queried CloudTrail logs using Athena for API activity analysis.
+- Removed all logging, monitoring and storage resources after validation.
    
 ---
 
 ## Screenshots
 
-*All screenshots are included in the `screenshots/` folder of this repository.*
-
-| Order | File Name                                 | What it Shows                                      |
-|-------|-------------------------------------------|----------------------------------------------------|
-| 1     | awsconfig_rules_compliance_status.png     | AWS Config dashboard showing compliance status     |
-| 2     | cloudtrail_trail_summary.png              | Multi-region CloudTrail trail summary              |
-| 3     | cloudwatch_alarm_consolelogin_summary.png | CloudWatch alarm summary for ConsoleLogin events   |
-| 4     | cloudwatch_metric_filter_consolelogin.png | CloudWatch metric filter for ConsoleLogin events   |
-| 5     | guardduty_enabled_dashboard.png           | GuardDuty dashboard showing enabled status         |
-| 6     | sample-cloudtrail-log-json.png            | Sample raw CloudTrail event JSON log for reference |
+Selected screenshots are included in the `screenshots/` directory to validate configuration and data flow.
 
 ---
 
 ## JSONs Table
 
-*JSON files are included in the /sample_jsons/ folder for reference in this repository.
+Sample JSON files are included in the `/sample_jsons/` directory for reference.
 
 | Order | File Name                               | What it Shows                                |
 |-------|-----------------------------------------|----------------------------------------------|
@@ -129,13 +59,25 @@ In modern cloud environments, the sheer volume of API activity and complex confi
 
 ---
 
-## Lessons Learned
+## Key Takeaways
 
-- Centralized logging with CloudTrail is essential for tracking all AWS API activity and forensic analysis.
-- GuardDuty enhances security posture with automated threat detection powered by machine learning.
-- AWS Config enables continuous compliance monitoring with customizable rules that detect misconfigurations.
-- CloudWatch metric filters and alarms provide real-time alerting on suspicious activity.
-- Athena enables flexible, fast querying of raw logs stored in S3, empowering security investigations and audits.
+- Centralized logging is essential for understanding AWS account activity.
+- CloudTrail provides a reliable source of API-level events.
+- AWS Config enables visibility into configuration changes over time.
+- CloudWatch converts logs into actionable operational signals.
+- Athena allows flexible, ad-hoc analysis of logs stored in S3.
+- Observability pipelines require deliberate teardown to control cost.
+  
+---
+
+## Relevance to Cloud & Platform Engineering
+
+This project reflects real-world platform responsibilities:
+- Centralized logging and auditability.
+- Configuration visibility and drift detection.
+- Metric-based alerting and monitoring.
+- Log analysis using managed AWS services.
+- Operational lifecycle management.
 
 ---
 
@@ -151,5 +93,5 @@ In modern cloud environments, the sheer volume of API activity and complex confi
 
 ## Contact
 
-Sebastian Silva C. – July, 2025 – Berlin, Germany.  
-[LinkedIn](https://www.linkedin.com/in/sebastiansilc) | [GitHub](https://github.com/SebaSilC) | [sebastian@playbookvisualarts.com](mailto:sebastian@playbookvisualarts.com)
+Maintained by Sebastian Silva C. – Berlin, Germany  
+LinkedIn: https://www.linkedin.com/in/sebastiansilc 
