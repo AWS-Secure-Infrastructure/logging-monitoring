@@ -51,12 +51,6 @@ Selected screenshots are included in the `screenshots/` directory to validate co
 
 Sample JSON files are included in the `/sample_jsons/` directory for reference.
 
-| Order | File Name                               | What it Shows                                |
-|-------|-----------------------------------------|----------------------------------------------|
-| 1     | awsconfig_rule_noncompliant_sample.json | AWS Config non-compliance finding JSON       |
-| 2     | cloudtrail_event_sample.json            | Sample CloudTrail event JSON                 |
-| 3     | guardduty_sample_finding.json           | Sample GuardDuty finding JSON                |
-
 ---
 
 ## Key Takeaways
