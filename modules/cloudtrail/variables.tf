@@ -29,3 +29,9 @@ variable "tags" {
   description = "Tags for CloudTrail"
   type        = map(string)
 }
+
+variable "cloudwatch_log_group_arn" {
+  description = "CloudWatch Log Group ARN for CloudTrail delivery"
+  type        = string
+  default     = null
+}
